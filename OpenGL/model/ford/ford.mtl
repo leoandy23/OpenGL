@@ -1,0 +1,68 @@
+# Blender 3.4.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Back
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Back_baseColor.png
+map_Bump -bm 1.000000 Back_normal.png
+
+newmtl Bottom
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Bottom_baseColor.png
+map_Bump -bm 1.000000 Bottom_normal.png
+
+newmtl Front
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Front_baseColor.png
+map_Bump -bm 1.000000 Front_normal.png
+
+newmtl Glass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Glass_baseColor.png
+map_Bump -bm 1.000000 Glass_normal.png
+
+newmtl Inside
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Inside_baseColor.png
+map_Bump -bm 1.000000 Inside_normal.png
+
+newmtl Wheel
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd Wheel_baseColor.png
+map_Bump -bm 1.000000 Wheel_normal.png
