@@ -52,7 +52,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Exercise 16 Task 3", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Examen Bimestral 2 - Grupo 5", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -75,26 +75,20 @@ int main()
         return -1;
     }
 
-    // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
-    //stbi_set_flip_vertically_on_load(true);
-
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
     // build and compile shaders
     // -------------------------
-    Shader lightCubeShader("shaders/shader_exercise15_lightcube.vs", "shaders/shader_exercise15_lightcube.fs");
-    Shader lightingShader("shaders/shader_exercise15t5_casters.vs", "shaders/shader_exercise15t5_casters.fs");
-    Shader ourShader("shaders/shader_exercise16_mloading.vs", "shaders/shader_exercise16_mloading.fs");
-    //Shader ourShader1("shaders/shader_exercise16_mloading.vs", "shaders/shader_exercise16_mloading.fs");
+    Shader lightCubeShader("shaders/ExamenBimestral2_lightcube.vs", "shaders/ExamenBimestral2_lightcube.fs");
+    Shader lightingShader("shaders/ExamenBimestral2_casters.vs", "shaders/ExamenBimestral2_casters.fs");
     // load models
     // -----------
-    //Model ourModel(FileSystem::getPath("resources/objects/backpack/backpack.obj"));
-    //Model ourModel("model/baphomet/baphomet.obj");
-    Model ourModel1("model/ford/ford.obj");
-    //Model ourModel("model/backpack/backpack.obj");
     Model ourModel("model/street/street.obj");
+    Model ourModel1("model/ford/ford.obj");
+    Model ourModel2("model/tree/tree.obj");
+    Model ourModel3("model/person/person.obj");
 
     //-Cubo
     float vertices[] = {
@@ -145,23 +139,26 @@ int main()
     //Posiciones de los modelos
     glm::vec3 cubePositions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)
+        glm::vec3(4.0f, 0.0f, 0.0f),
+        glm::vec3(-3.1f, 0.0f, 7.37f),
+        glm::vec3(-3.1f, 0.0f, 5.45f),
+        glm::vec3(-3.1f, 0.0f, 3.53f),
+        glm::vec3(-3.1f, 0.0f, 1.61f),
+        glm::vec3(-3.1f, 0.0f, -0.31f),
+        glm::vec3(-3.1f, 0.0f, -2.23f),
+        glm::vec3(-3.1f, 0.0f, -4.15f),
+        glm::vec3(-3.1f, 0.0f, -6.07f),
+        glm::vec3(-3.1f, 0.0f, -7.99f),
+        glm::vec3(2.30f, 0.27f, 0.9f),
 };
     //Posiciones de luces
     // positions of the point lights
     glm::vec3 pointLightPositions[] = {
-        glm::vec3(6.0f, 0.5f,  -6.75f),
-        glm::vec3(6.0f, 0.5f, 6.75f),
-        glm::vec3(-3.0f, 0.5f, 6.75f),
-        glm::vec3(-3.0f, 0.5f, -6.75f),
+        glm::vec3(-2.0f, 1.0f, 8.40f),
+        glm::vec3(-2.0f, 1.0f, -8.25f),
+        glm::vec3(6.65f, 1.0f,  -8.25f),
+        glm::vec3(6.65f, 1.0f, 8.40f),
+        glm::vec3(-2.0f, 8.0f, 8.0f),
     };
 
     //VAO luces
@@ -200,8 +197,6 @@ int main()
     lightingShader.setInt("material.diffuse", 0);
     lightingShader.setInt("material.specular", 1);
 
-    // draw in wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     camera.MovementSpeed = 5; //Optional. Modify the speed of the camera
 
@@ -221,27 +216,18 @@ int main()
 
         // render
         // ------
-        glClearColor(0.13f, 0.14f, 0.18f, 1.0f);
+        //glClearColor(0.13f, 0.14f, 0.18f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //------------------------- 
         // don't forget to enable shader before setting uniforms
-        ourShader.use();
-        //ourShader1.use();
         // be sure to activate shader when setting uniforms/drawing objects
         lightingShader.use();
         
         lightingShader.setVec3("viewPos", camera.Position);
         lightingShader.setFloat("material.shininess", 50.0f);
 
-        //Exercise 15 Task 5
-
-        /*
-        Here we set all the uniforms for the 5/6 types of lights we have. We have to set them manually and index
-        the proper PointLight struct in the array to set each uniform variable. This can be done more code-friendly
-        by defining light types as classes and set their values in there, or by using a more efficient uniform approach
-        by using 'Uniform buffer objects'.
-        */
         // directional light
         lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
         lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
@@ -279,6 +265,15 @@ int main()
         lightingShader.setFloat("pointLights[3].constant", 1.0f);
         lightingShader.setFloat("pointLights[3].linear", 0.09);
         lightingShader.setFloat("pointLights[3].quadratic", 0.032);
+
+        // point light 5
+        lightingShader.setVec3("pointLights[4].position", pointLightPositions[4]);
+        lightingShader.setVec3("pointLights[4].ambient", 0.05f, 0.05f, 0.05f);
+        lightingShader.setVec3("pointLights[4].diffuse", 0.8f, 0.8f, 0.8f);
+        lightingShader.setVec3("pointLights[4].specular", 1.0f, 1.0f, 1.0f);
+        lightingShader.setFloat("pointLights[4].constant", 1.0f);
+        lightingShader.setFloat("pointLights[4].linear", 0.007);
+        lightingShader.setFloat("pointLights[4].quadratic", 0.0002);
         // spotLight
         lightingShader.setVec3("spotLight.position", camera.Position);
         lightingShader.setVec3("spotLight.direction", camera.Front);
@@ -301,55 +296,74 @@ int main()
         // world transformation
         glm::mat4 modell = glm::mat4(1.0f);
         lightingShader.setMat4("model", modell);
-        //--------------------------
-     for (unsigned int i = 0; i < 1; i++){
+
+
 		//calculate the model matrix for each object and pass it to the shader before drawing
+        for (unsigned int i = 0; i < 12; i++){
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 20.0f * i;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-        model = glm::scale(model, glm::vec3(0.2f));
-        lightingShader.setMat4("model", model);
-        if (i % 2 == 0) {
+        if (i == 0) {
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 0.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::scale(model, glm::vec3(0.2f));
+            lightingShader.setMat4("model", model);
         ourModel.Draw(lightingShader);
         }
-        else {
+        else if(i==1) {
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 90.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+            model = glm::scale(model, glm::vec3(0.1f));
+            lightingShader.setMat4("model", model);
         ourModel1.Draw(lightingShader);
         }
-    }
-        // world transformation
-        //glm::mat4 modell = glm::mat4(1.0f);
-        //modell = glm::translate(modell, glm::vec3(-2.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        //lightingShader.setMat4("model", modell);
-        //ourModel.Draw(lightingShader);
+        else if(i>=2 && i<=10){
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 0.0f * i;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::scale(model, glm::vec3(0.008f));
+            lightingShader.setMat4("model", model);
+            ourModel2.Draw(lightingShader);
+        }
+        else {
+            model = glm::translate(model, cubePositions[i]);
+            float angle = 90.0f;
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+            model = glm::scale(model, glm::vec3(0.3f));
+            lightingShader.setMat4("model", model);
+            ourModel3.Draw(lightingShader);
+        }
+        }
+     
+        // also draw the lamp object(s)
+        lightCubeShader.use();
+        lightCubeShader.setMat4("projection", projectionl);
+        lightCubeShader.setMat4("view", viewl);
 
-        //modell = glm::mat4(1.0f);
-        //modell = glm::translate(modell, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        //lightingShader.setMat4("model", modell);
-        //ourModel1.Draw(lightingShader);
-        
-     //Exercise 15 Task 5
-         // also draw the lamp object(s)
-     lightCubeShader.use();
-     lightCubeShader.setMat4("projection", projectionl);
-     lightCubeShader.setMat4("view", viewl);
-
-     // we now draw as many light bulbs as we have point lights.
-     glBindVertexArray(lightCubeVAO);
-     for (unsigned int i = 0; i < 4; i++)
-     {
-         modell = glm::mat4(1.0f);
-         modell= glm::translate(modell, pointLightPositions[i]);
-         //modell = glm::scale(modell, glm::vec3(0.2f)); // Make it a smaller cube
-         lightCubeShader.setMat4("model", modell);
-         glDrawArrays(GL_TRIANGLES, 0, 36);
-     }
+        // we now draw as many light bulbs as we have point lights.
+        glBindVertexArray(lightCubeVAO);
+        for (unsigned int i = 0; i < 5; i++)
+        {
+         if (i >= 0 && i <= 3) {
+             modell = glm::mat4(1.0f);
+             modell = glm::translate(modell, pointLightPositions[i]);
+             modell = glm::scale(modell, glm::vec3(0.2f, 2.0f, 0.2f)); // Make it a smaller cube
+             lightCubeShader.setMat4("model", modell);
+             glDrawArrays(GL_TRIANGLES, 0, 36);
+         }else {
+             modell = glm::mat4(1.0f);
+             modell = glm::translate(modell, pointLightPositions[i]);
+             modell = glm::scale(modell, glm::vec3(1.0f, 1.0f, 1.0f)); // Make it a smaller cube
+             lightCubeShader.setMat4("model", modell);
+             glDrawArrays(GL_TRIANGLES, 0, 36);
+         }
+         
+        }
 
               
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -357,7 +371,6 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     // optional: de-allocate all resources once they've outlived their purpose:
- // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteVertexArrays(1, &lightCubeVAO);
     glDeleteBuffers(1, &VBO);

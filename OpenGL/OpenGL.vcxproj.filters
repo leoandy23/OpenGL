@@ -24,7 +24,7 @@
     <ClCompile Include="..\OpenGL_Stuff\Library\glad.c">
       <Filter>Archivos de encabezado\Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="ExamenFinal.cpp">
+    <ClCompile Include="ExamenBimestral2.cpp">
       <Filter>Archivos de encabezado\Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
