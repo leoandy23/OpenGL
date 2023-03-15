@@ -137,7 +137,7 @@ int main()
     };
 
     //Posiciones de los modelos
-    glm::vec3 cubePositions[] = {
+    glm::vec3 modelPositions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(4.0f, 0.0f, 0.0f),
         glm::vec3(-3.1f, 0.0f, 7.37f),
@@ -226,7 +226,7 @@ int main()
         lightingShader.use();
         
         lightingShader.setVec3("viewPos", camera.Position);
-        lightingShader.setFloat("material.shininess", 50.0f);
+        lightingShader.setFloat("material.shininess", 25.0f);
 
         // directional light
         lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
@@ -302,7 +302,7 @@ int main()
         for (unsigned int i = 0; i < 12; i++){
         glm::mat4 model = glm::mat4(1.0f);
         if (i == 0) {
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, modelPositions[i]);
             float angle = 0.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             model = glm::scale(model, glm::vec3(0.2f));
@@ -310,7 +310,7 @@ int main()
         ourModel.Draw(lightingShader);
         }
         else if(i==1) {
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, modelPositions[i]);
             float angle = 90.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
             model = glm::scale(model, glm::vec3(0.1f));
@@ -318,7 +318,7 @@ int main()
         ourModel1.Draw(lightingShader);
         }
         else if(i>=2 && i<=10){
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, modelPositions[i]);
             float angle = 0.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             model = glm::scale(model, glm::vec3(0.008f));
@@ -326,7 +326,7 @@ int main()
             ourModel2.Draw(lightingShader);
         }
         else {
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, modelPositions[i]);
             float angle = 90.0f;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
             model = glm::scale(model, glm::vec3(0.3f));
